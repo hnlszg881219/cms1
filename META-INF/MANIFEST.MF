@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: cms1
+Bundle-SymbolicName: cms1
+Bundle-Version: 1.0.0.qualifier
+Export-Package: com.banhui.cms.dao,
+ com.banhui.cms.dao.impl,
+ com.banhui.cms.entities,
+ com.banhui.cms.mapper,
+ com.banhui.cms.system,
+ com.banhui.cms.unit,
+ com.banhui.cms.web
