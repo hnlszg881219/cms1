@@ -10,6 +10,7 @@ import java.util.Date;
 import org.joda.time.DateTime;
 import org.junit.Test;
 import org.unitils.UnitilsJUnit4;
+import org.unitils.database.annotations.Transactional;
 import org.unitils.dbunit.annotation.DataSet;
 import org.unitils.spring.annotation.SpringApplicationContext;
 import org.unitils.spring.annotation.SpringBeanByType;
@@ -92,12 +93,17 @@ public class UserDaoImplTest extends UnitilsJUnit4{
 	
 	@Test
 	@DataSet("/user.xml")
+	@Transactional()
 	public void testUpdateUserPwdById()throws Exception{
 		final long userId = 1L;
-		final String password = "395732330";
+		final String newPassword = "395732331";
+		final String oldPassword = "395732330";
 		final Date updateTime = new DateTime(2016, 12, 13, 12,12,12).toDate();
-		final long c = userDao.updateUserPwdById(userId, password, updateTime);
+		final long c = userDao.updateUserPwdById(userId, newPassword, updateTime);
 		assertEquals(1, c);
+		
+		final long c1 = userDao.updateUserPwdById(userId, oldPassword, newPassword, updateTime);
+		assertEquals(1, c1);
 	}
 	
 	@Test
