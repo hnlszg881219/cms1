@@ -98,7 +98,7 @@ public class UserDaoImpl implements UserDao {
 		return 0;
 	}
 
-	public boolean updateUserPwdById(long userId, String password, final Date updateTime) {
+	public int updateUserPwdById(long userId, String password, final Date updateTime) {
 		final String sql = "update user"
 				+ " set password = :password,"
 				+ " update_time = :update_time"
@@ -107,10 +107,10 @@ public class UserDaoImpl implements UserDao {
 		paramSource.addValue("user_id", userId);
 		paramSource.addValue("password", password);
 		paramSource.addValue("update_time", updateTime);
-		return namedParameterJdbcTemplate.update(sql, paramSource)>0?true:false;
+		return namedParameterJdbcTemplate.update(sql, paramSource);
 	}
 
-	public boolean updateUserMobileById(long userId, String mobile, final Date updateTime) {
+	public int updateUserMobileById(long userId, String mobile, final Date updateTime) {
 		final String sql = "update user"
 				+ " set mobile = :mobile,"
 				+ " update_time = :update_time"
@@ -119,10 +119,10 @@ public class UserDaoImpl implements UserDao {
 		paramSource.addValue("user_id", userId);
 		paramSource.addValue("mobile", mobile);
 		paramSource.addValue("update_time", updateTime);
-		return namedParameterJdbcTemplate.update(sql, paramSource)>0?true:false;
+		return namedParameterJdbcTemplate.update(sql, paramSource);
 	}
 
-	public boolean updateUserEmailById(long userId, String email, final Date updateTime) {
+	public int updateUserEmailById(long userId, String email, final Date updateTime) {
 		final String sql = "update user "
 				+ " set email = :email,"
 				+ " update_time = :update_time"
@@ -131,10 +131,10 @@ public class UserDaoImpl implements UserDao {
 		paramSource.addValue("user_id", userId);
 		paramSource.addValue("email", email);
 		paramSource.addValue("update_time", updateTime);
-		return namedParameterJdbcTemplate.update(sql, paramSource)>0?true:false;
+		return namedParameterJdbcTemplate.update(sql, paramSource);
 	}
 
-	public boolean updateUserPwdById(long userId, String newPassword,
+	public int updateUserPwdById(long userId, String newPassword,
 			String oldPassword, Date updateTime) {
 		final String sql = "update user"
 				+ " set password = :new_password,"
@@ -146,7 +146,7 @@ public class UserDaoImpl implements UserDao {
 		paramSource.addValue("new_password", newPassword);
 		paramSource.addValue("old_password", oldPassword);
 		paramSource.addValue("update_time", updateTime);
-		return namedParameterJdbcTemplate.update(sql, paramSource)>0?true:false;
+		return namedParameterJdbcTemplate.update(sql, paramSource);
 	}
 
 	public long authenticate(String loginNameOrMobile, String password) {

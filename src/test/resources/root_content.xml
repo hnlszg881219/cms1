@@ -6,6 +6,6 @@
              http://www.springframework.org/schema/beans/spring-beans.xsd
              http://www.springframework.org/schema/context
              http://www.springframework.org/schema/context/spring-context.xsd">
-   <import resource="jdbc.xml"/>
+  <import resource="jdbc.xml"/>
    <context:component-scan base-package="com.banhui.cms.dao.impl"></context:component-scan>
 </beans>

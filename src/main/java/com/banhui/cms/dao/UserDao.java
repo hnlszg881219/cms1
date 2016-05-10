@@ -84,7 +84,7 @@ public interface UserDao {
      * @return
      *
      */
-    boolean updateUserPwdById(final long userId, final String password, final Date updateTime);
+    int updateUserPwdById(final long userId, final String password, final Date updateTime);
     
     /**
      * 
@@ -100,7 +100,7 @@ public interface UserDao {
      * @return
      * 
      */
-    boolean updateUserPwdById(final long userId, final String newPassword, final String oldPassword, final Date updateTime);
+    int updateUserPwdById(final long userId, final String newPassword, final String oldPassword, final Date updateTime);
     /**
      *
      * 
@@ -113,7 +113,7 @@ public interface UserDao {
      * @return
      * 
      */
-    boolean updateUserMobileById(final long userId, final String mobile, final Date updateTime);
+    int updateUserMobileById(final long userId, final String mobile, final Date updateTime);
     
     /**
      * 
@@ -127,7 +127,7 @@ public interface UserDao {
      * @return
      * 
      */
-    boolean updateUserEmailById(final long userId, final String email, final Date updateTime);
+    int updateUserEmailById(final long userId, final String email, final Date updateTime);
     
     /**
      * 

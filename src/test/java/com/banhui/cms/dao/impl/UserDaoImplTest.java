@@ -11,7 +11,6 @@ import org.joda.time.DateTime;
 import org.junit.Test;
 import org.unitils.UnitilsJUnit4;
 import org.unitils.dbunit.annotation.DataSet;
-import org.unitils.dbunit.annotation.ExpectedDataSet;
 import org.unitils.spring.annotation.SpringApplicationContext;
 import org.unitils.spring.annotation.SpringBeanByType;
 
@@ -59,9 +58,7 @@ public class UserDaoImplTest extends UnitilsJUnit4{
 	    mobile = "212345678901";
 	    assertEquals(false, userDao.isExistsUserByMobile(mobile));
 	}
-	
-	
-	
+
 	@Test
 	@DataSet("/user.xml")
 	public void testQueryUserIdByLoginName() throws Exception{
@@ -74,12 +71,12 @@ public class UserDaoImplTest extends UnitilsJUnit4{
 	
 	@Test
 	@DataSet("/user.xml")
-	@ExpectedDataSet("/excepted_user.xml")
 	public void updateUserEmailById() throws Exception{
 		final long userId = 1L;
 		final String email = "395732331@qq.com";
 		final Date updateTime = new DateTime(2016, 12, 13, 12,12,12).toDate();
-		userDao.updateUserEmailById(userId, email, updateTime);
+		final long c  = userDao.updateUserEmailById(userId, email, updateTime);
+		assertEquals(1, c);
 	}
 	
 	@Test
@@ -95,22 +92,22 @@ public class UserDaoImplTest extends UnitilsJUnit4{
 	
 	@Test
 	@DataSet("/user.xml")
-	@ExpectedDataSet("/excepted1_user.xml")
 	public void testUpdateUserPwdById()throws Exception{
 		final long userId = 1L;
 		final String password = "395732330";
 		final Date updateTime = new DateTime(2016, 12, 13, 12,12,12).toDate();
-		userDao.updateUserPwdById(userId, password, updateTime);
+		final long c = userDao.updateUserPwdById(userId, password, updateTime);
+		assertEquals(1, c);
 	}
 	
 	@Test
 	@DataSet("/user.xml")
-	@ExpectedDataSet("/excepted2_user.xml")
 	public void testupdateUserMobileById() throws Exception{
 		final long userId = 1L;
 		final String mobile = "18918102624";
 		final Date updateTime = new DateTime(2016, 12, 13, 12,12,12).toDate();
-		userDao.updateUserMobileById(userId, mobile, updateTime);
+		final long c = userDao.updateUserMobileById(userId, mobile, updateTime);
+		assertEquals(1, c);
 	}
 	
 }
