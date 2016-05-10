@@ -97,7 +97,7 @@ public class CaptchaCodeService {
 	    // 
 	    HttpSession session = req.getSession();
 	    //System.out.print(randomCode);
-	    session.setAttribute("code", partner1+partner2);
+	    session.setAttribute("code", (partner1+partner2)+"");
 
 	    // 
 	    resp.setHeader("Pragma", "no-cache");
