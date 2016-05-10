@@ -27,8 +27,8 @@ import com.banhui.cms.system.AuthenticationToken;
 public class AccountService {
 	Logger logger = Logger.getLogger(AccountService.class);
 	
-	static Pattern LOGIN_NAME_PATTERN = Pattern.compile("^[0-9a-zA-Z_]{6,18}$", Pattern.CASE_INSENSITIVE);
-	static Pattern PASSWORD_PATTERN = Pattern.compile("^[0-9a-zA-Z\u4E00-\u9FA5]{8,20}$", Pattern.CASE_INSENSITIVE);
+	static Pattern LOGIN_NAME_PATTERN = Pattern.compile("^[0-9a-zA-Z\u4E00-\u9FA5]{6,18}$", Pattern.CASE_INSENSITIVE);
+	static Pattern PASSWORD_PATTERN = Pattern.compile("^[0-9a-zA-Z_]{8,20}$", Pattern.CASE_INSENSITIVE);
 	static Pattern MOBILE_PATTERN = Pattern.compile("^[1][3-8][0-9]{9}$", Pattern.CASE_INSENSITIVE);
 	static Pattern ID_CARD_PATTERN = Pattern.compile("^[0-9]{15}|[0-9]{17}[0-9X]$",Pattern.CASE_INSENSITIVE);
 	
@@ -54,7 +54,8 @@ public class AccountService {
 	 * 
 	 */
 	public Map<String,Object> signIn(@RequestParam("login_name_or_mobile") String loginNameOrMobile,
-			@RequestParam("pwd") String password, HttpSession session){
+			@RequestParam("pwd") String password, @RequestParam("code")  String code,
+			HttpSession session){
 		Map<String,Object> map = new HashMap<String,Object>();
 		AuthenticationToken token = new AuthenticationToken();
 		if(StringUtils.isEmpty(loginNameOrMobile)){
@@ -65,6 +66,19 @@ public class AccountService {
 		
 		if(StringUtils.isEmpty(password)){
 			map.put("message", "密码不能为空!");
+			map.put("success", false);
+			return map;
+		}
+		
+		if(StringUtils.isEmpty(code)){
+			map.put("message", "验证码不能为空!");
+			map.put("success", false);
+			return map;
+		}
+		
+		final String scode = (String)session.getAttribute("code");
+		if(!scode.equals(code)){
+			map.put("message", "验证码不正确!");
 			map.put("success", false);
 			return map;
 		}
@@ -87,8 +101,13 @@ public class AccountService {
 	public Map<String,Object> signOut(HttpSession session){
 		Map<String,Object> map = new HashMap<String,Object>();
 		session.removeAttribute("token");
-		map.put("message", "登出成功!");
-		map.put("success", true);
+		if(session.getAttribute("token") == null){
+			map.put("message", "登出成功!");
+			map.put("success", true);
+		}else{
+			map.put("message", "登出失败!");
+			map.put("success", false);
+		}
 		return map;
 	}
 	
@@ -126,13 +145,13 @@ public class AccountService {
 		Map<String,Object> map = new HashMap<String,Object>();
 		if (!LOGIN_NAME_PATTERN.matcher(loginName).matches()){
 			map.put("success", false);
-			map.put("message", "用户名只能为数字字母下划线且长度为6-18!");
+			map.put("message", "用户名只能为数字字母中文且长度为6-18!");
 			return map;
 		}
 		
 		if (!PASSWORD_PATTERN.matcher(password).matches()){
 			map.put("success", false);
-			map.put("message", "密码只能为数字字母中文且长度为8-20!");
+			map.put("message", "密码只能为数字字母下划线且长度为8-20!");
 			return map;
 		}
 		
